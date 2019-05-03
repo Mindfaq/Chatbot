@@ -1,0 +1,120 @@
+def application(x):
+    import requests
+    import wolframalpha
+    import datetime
+    from quickstart import main
+    from time import gmtime, strftime
+
+    #client = wolframalpha.Client("T3HP8K-4R8VEVYE2R")
+    userinp = x
+    userinplst = userinp.lower().split()
+    #ssl._create_default_https_context = ssl._create_unverified_context
+    #res = client.query('temperature in Washington, DC on October 3, 2012')
+
+    #print(res)
+    def weatherpull():
+        {
+
+        }
+
+    #ordbok
+    qstwords = ["what's","what", "how","how's","when", "where", "can", "tell"]
+    cmnwords = ["the", "was", "has", "been","my", "it", "got", "at", "first", "but", "is"]
+    negative = ["dreadful", "bad","poor","dreadful","lousy","rough", "shit", "trash", "terrible", "horrible"]
+    positive = ["good", "great", "excellent", "wonderful", "marvelous",]
+    pwrwords = ["mostly","primarliy"]
+    mafsymbols = ["+","-","*","/"]
+    agressive = ["fucking"]
+    calendartoday = ["today", "day"]
+
+    # Gör en ny lista av userinput som har ett tomt utrymmeri slutet för att min funktion lättare ska kunna sortera ut
+    #normala ord.
+    print(userinplst)
+    tryout = userinplst + [""]
+
+    #Type of text
+    mood = 0
+    question = 0
+    agression = 0
+
+    #firstnum = 0
+    #Sök funktion som går igenom varje ord
+    for i in tryout:
+        if i in cmnwords:
+            userinplst.remove(i)
+        if i in negative:
+            mood += -1
+        if i in positive:
+            mood += 1
+        if i in qstwords:
+            question = 1
+            userinplst.remove(i)
+        if i in mafsymbols:
+            a=int(tryout[0])
+            b=tryout[1]
+            c=int(tryout[2])
+
+            #Matematik funktionerna
+            if b == "+":
+                print(a,"+",c,"=",a+c)
+            if b == "*":
+                print(a,"*",c,"=",a*c)
+            if b == "/":
+                print(a,"/",c,"=",a/c)
+            if b == "-":
+                print(a,"-",c,"=",a-c)
+
+    #Hämtar staden från texten, är två bakåt då jag har ett tomt utrymme. För att slippa ha alla städer i en fil
+    city = [tryout[-2]]
+    cityreal = []
+    for i in city:
+        for z in i:
+            cityreal.append(z)
+    try:
+        cityreal.remove("?")
+    except:
+        x=1
+
+    citynew = "".join(cityreal)
+
+
+
+    #Information
+    if question == 1:
+        for i in userinplst:
+
+            if i == "time":
+                print("The time is:", strftime("%H:%M:%S", gmtime()))
+            if i == "date":
+                print("The date is:", strftime("%Y-%m-%d", gmtime()))
+
+                #Kalender funktion
+            if i in calendartoday:
+                print(main())
+
+                #Väder funktion som sorterar ut data ur de apin returnerar
+            if i == "weather":
+                api_address = 'http://api.openweathermap.org/data/2.5/weather?appid=b471e4f05558dcbb970da39caa04080a&q='
+                url = api_address + citynew
+                json_data = requests.get(url).json()
+                #Stats
+                weather1 = json_data.get("weather")
+                temperature = json_data.get("main")
+                weather = weather1[0]
+                currentweather = weather.get("description")
+                temp = int(temperature.get("temp"))-273
+                print("The current temperature in", citynew, "is:", temp, "degrees celcius", "and the current forecast is:", currentweather)
+
+#generaliserat svar
+    if question == 0 and mood !=0:
+        if mood > 0:
+            print("glad to hear!")
+        if mood < 0:
+            print("i'm sorry to hear")
+
+    newlist = userinplst
+    print(newlist)
+    print("Mood:",mood)
+    print("Question?", question)
+    print("agression:",agression)
+    return
