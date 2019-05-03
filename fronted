@@ -1,0 +1,35 @@
+from tkinter import *
+import tkinter as tk
+from backend import application
+
+
+root = Tk()
+user_input = tk.Entry(root)
+
+root.title("bepis")
+root.geometry("480x150")
+x = 0
+def sendit():
+    imported = application(str(e1.get()))
+    print(imported,2)
+    user = Label(root, text = e1.get())
+    user.grid( row = 1, column = 0)
+    response = Label(root, text = imported)
+    response.grid(row = 2, column = 0)
+    Label.a()
+
+
+
+#Functions
+e1 = Entry(root)
+b1 = Button(root, text = "Submit", command = sendit)
+e2 = Entry(root)
+
+#Placement
+e1.grid(row = 0, column = 0)
+b1.grid(row = 0, column = 3)
+e2.grid(row = 1, column = 0)
+
+user_input.pack()
+user_input.bind("<Return>", sendit)
+root.mainloop()
