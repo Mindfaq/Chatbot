@@ -1,35 +1,37 @@
 from tkinter import *
 import tkinter as tk
-from backend import application
+from Chatbotbackendrem import application
 
 
 root = Tk()
 user_input = tk.Entry(root)
 
-root.title("bepis")
-root.geometry("480x150")
-x = 0
+root.title("Charvis")
+root.geometry("480x750")
+
+#Linken mellan backend och frontend, tryit används som räknare
+tryit = 0
 def sendit():
+    global tryit
     imported = application(str(e1.get()))
-    print(imported,2)
-    user = Label(root, text = e1.get())
-    user.grid( row = 1, column = 0)
-    response = Label(root, text = imported)
-    response.grid(row = 2, column = 0)
-    Label.a()
+    user = Label(root, text = e1.get(),borderwidth=2, relief="groove")
+    user.grid( row = 1 + tryit, column = 3)
+    responseg = Label(root, text = imported, borderwidth=2, relief="groove")
+    responseg.grid(row = 2 + tryit, column = 3)
+    tryit += 2
 
 
 
-#Functions
+
+#Funktioner
 e1 = Entry(root)
 b1 = Button(root, text = "Submit", command = sendit)
-e2 = Entry(root)
 
-#Placement
-e1.grid(row = 0, column = 0)
-b1.grid(row = 0, column = 3)
-e2.grid(row = 1, column = 0)
 
-user_input.pack()
-user_input.bind("<Return>", sendit)
+#Placering
+e1.grid(row = 0, column = 3)
+b1.grid(row = 0, column = 5)
+
+
+
 root.mainloop()
