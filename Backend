@@ -6,16 +6,15 @@ def application(x):
     from time import gmtime, strftime
 
     #client = wolframalpha.Client("T3HP8K-4R8VEVYE2R")
-    userinp = x
-    userinplst = userinp.lower().split()
     #ssl._create_default_https_context = ssl._create_unverified_context
     #res = client.query('temperature in Washington, DC on October 3, 2012')
-
+    
+    
+    userinp = x
+    userinplst = userinp.lower().split()
+    response = []
     #print(res)
-    def weatherpull():
-        {
 
-        }
 
     #ordbok
     qstwords = ["what's","what", "how","how's","when", "where", "can", "tell"]
@@ -56,13 +55,13 @@ def application(x):
 
             #Matematik funktionerna
             if b == "+":
-                print(a,"+",c,"=",a+c)
+                response = [a,"+",c,"=",a+c]
             if b == "*":
-                print(a,"*",c,"=",a*c)
+                response = [a,"*",c,"=",a*c]
             if b == "/":
-                print(a,"/",c,"=",a/c)
+                response = [a,"/",c,"=",a/c]
             if b == "-":
-                print(a,"-",c,"=",a-c)
+                response = [a,"-",c,"=",a-c]
 
     #Hämtar staden från texten, är två bakåt då jag har ett tomt utrymme. För att slippa ha alla städer i en fil
     city = [tryout[-2]]
@@ -84,13 +83,13 @@ def application(x):
         for i in userinplst:
 
             if i == "time":
-                print("The time is:", strftime("%H:%M:%S", gmtime()))
+                response = ["The time is:", strftime("%H:%M:%S", gmtime())]
             if i == "date":
-                print("The date is:", strftime("%Y-%m-%d", gmtime()))
+                response = ["The date is:", strftime("%Y-%m-%d", gmtime())]
 
                 #Kalender funktion
             if i in calendartoday:
-                print(main())
+                response =main()
 
                 #Väder funktion som sorterar ut data ur de apin returnerar
             if i == "weather":
@@ -103,18 +102,15 @@ def application(x):
                 weather = weather1[0]
                 currentweather = weather.get("description")
                 temp = int(temperature.get("temp"))-273
-                print("The current temperature in", citynew, "is:", temp, "degrees celcius", "and the current forecast is:", currentweather)
+                response = ["The current temperature in", citynew, "is:", temp, "degrees celcius", "and the current forecast is:", currentweather]
 
 #generaliserat svar
     if question == 0 and mood !=0:
         if mood > 0:
-            print("glad to hear!")
+            response = "glad to hear!"
         if mood < 0:
-            print("i'm sorry to hear")
+            response = "i'm sorry to hear"
 
-    newlist = userinplst
-    print(newlist)
-    print("Mood:",mood)
-    print("Question?", question)
-    print("agression:",agression)
-    return
+
+    return response
+
